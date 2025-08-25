@@ -9,7 +9,49 @@
     <script src="./code.js" defer></script>
   </head>
   <body>
-    <div class="board">
+    <div class="start-screen">
+      <div class="logo-section">
+        <h1 class="logo">Tic Tac Toe</h1>
+      </div>
+      <form action="" method="get">
+        <div class="player-input">
+          <div class="form-item">
+            <label for="player1-name">Player 1 Name:</label>
+            <input type="text" id="player1-name" name="player1-name" />
+          </div>
+          <div class="form-item">
+            <label for="player1-sign">Player 1 Sign:</label>
+            <input
+              type="text"
+              id="player1-sign"
+              name="player1-sign"
+              maxlength="1"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-item">
+          <button type="submit">Play Game</button>
+        </div>
+        <div class="player-input">
+          <div class="form-item">
+            <label for="player2-name">Player 2 Name:</label>
+            <input type="text" id="player2-name" name="player2-name" />
+          </div>
+          <div class="form-item">
+            <label for="player2-sign">Player 2 Sign:</label>
+            <input
+              type="text"
+              id="player2-sign"
+              name="player2-sign"
+              maxlength="1"
+              required
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="board removed">
       <div class="player-stats p1">
         <h1 class="score"></h1>
       </div>

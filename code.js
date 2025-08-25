@@ -1,6 +1,45 @@
-const createPlayer = function (name, sign) {
-  let pname = name;
-  let psign = sign;
+const startScreen = (function () {
+  const form = document.querySelector('form');
+  const board = document.querySelector('.board');
+  const startScreen = document.querySelector('.start-screen');
+
+  let p1Name, p2Name, p1Sign, p2Sign;
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const data = new FormData(form);
+
+    p1Name = data.get('player1-name');
+    p2Name = data.get('player2-name');
+    p1Sign = data.get('player1-sign');
+    p2Sign = data.get('player2-sign');
+
+    if (p1Sign === p2Sign) {
+      alert('Player sign should differ');
+      return;
+    }
+
+    board.classList.remove('removed');
+    startScreen.classList.add('removed');
+
+    game.playGame();
+  });
+
+  const getP1Details = () => {
+    return { name: p1Name, sign: p1Sign };
+  };
+
+  const getP2Details = () => {
+    return { name: p2Name, sign: p2Sign };
+  };
+
+  return { getP1Details, getP2Details };
+})();
+
+const createPlayer = function (details) {
+  let pname = details.name;
+  let psign = details.sign;
   let score = 0;
 
   const incrementScore = () => {
@@ -28,12 +67,17 @@ const game = (function () {
   let spacesLeft = 9;
   let board = [];
 
-  const gameBoard = document.querySelector('.game-board');
-
-  let players = [createPlayer('iemi', 'X'), createPlayer('elena', '0')];
+  let players;
   let currentPlayer = 0;
 
+  const gameBoard = document.querySelector('.game-board');
+
   const initBoard = () => {
+    players = [
+      createPlayer(startScreen.getP1Details()),
+      createPlayer(startScreen.getP2Details()),
+    ];
+
     initScores();
 
     for (let i = 0; i < rows; i++) {
@@ -133,5 +177,3 @@ const game = (function () {
 
   return { playGame };
 })();
-
-game.playGame();
