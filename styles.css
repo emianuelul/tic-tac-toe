@@ -42,6 +42,7 @@ label {
 
   font-size: 6rem;
 
+  user-select: none;
   cursor: pointer;
 }
 
