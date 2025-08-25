@@ -1,3 +1,22 @@
+:root {
+  --dark: #013237;
+  --main: #f6e8df;
+  --accent-main: #feae96;
+  --accent-secondary: #fe989c;
+}
+
+body {
+  background-color: whiet;
+}
+
+p,
+h1,
+button,
+label {
+  color: var(--dark);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .board {
   height: 100vh;
   display: flex;
@@ -44,21 +63,143 @@ label {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.logo-section {
+.header {
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  user-select: none;
+
+  gap: 1rem;
+
+  margin-bottom: 10rem;
+
+  transition: 0.5px;
+}
+
+.header > * {
+  flex: 1;
+}
+
+.header > img {
+  width: 84px;
+}
+
+.header > .logo-text {
+  font-size: 3rem;
+  text-wrap: nowrap;
+}
+
+.header::after {
+  position: absolute;
+  content: '';
+
+  width: 256px;
+  height: 256px;
+  border-radius: 128px;
+
+  background-color: var(--accent-main);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: -1;
 }
 
 form {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 
-  gap: 20px;
+  gap: 4rem;
+}
+
+form > * {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+form button {
+  font-size: 1.5rem;
+  border-radius: 16px;
+  border: 0;
+
+  background: var(--accent-main);
+
+  padding: 0.75em 1.5em;
+}
+
+form:hover button,
+form:hover input {
+  transition: 0.25s;
+}
+
+form button:hover {
+  background: var(--accent-secondary);
+
+  transform: scale(1.1);
+}
+
+form input {
+  text-align: center;
+  border: none;
+
+  outline: 0;
+
+  border-radius: 12px;
+}
+
+form input:required {
+  outline: 3px solid rgba(201, 83, 83, 0.5);
+  box-shadow: 8px 8px 16px rgba(249, 124, 124, 0.5);
+}
+
+form input:valid {
+  outline: 3px solid rgba(106, 201, 83, 0.5);
+  box-shadow: 8px 8px 16px rgba(149, 249, 124, 0.5);
+}
+
+form input:focus {
+  outline: 3px solid rgba(83, 93, 201, 0.5);
+  box-shadow: 8px 8px 16px rgba(124, 147, 249, 0.5);
+}
+
+.middle {
+  background-color: var(--main);
+  border-radius: 1rem;
+
+  box-shadow: 6px 6px 16px rgba(1, 17, 19, 0.5);
+
+  font-size: 1.25rem;
+  padding: 2em;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background: var(--dark);
+}
+
+.footer p {
+  color: var(--main);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.footer a {
+  color: var(--main);
+}
+
+.footer a:focus {
+  color: var(--accent-main);
 }
 
 .removed {
