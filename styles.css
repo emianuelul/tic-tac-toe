@@ -20,11 +20,77 @@ label {
 
 /* ======== GAME SCREEN ======== */
 
+/* .game-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100vw;
+} */
+
+.board-header {
+  background-color: var(--dark);
+  padding: 0.75rem 2rem;
+
+  display: flex;
+
+  width: 100%;
+}
+
+.board-header > .buttons {
+  display: flex;
+  align-items: center;
+
+  gap: 2rem;
+}
+
+.board-header > .buttons > button {
+  font-size: 1.25rem;
+  font-weight: bold;
+
+  padding: 0.5em 1em;
+  border-radius: 12px;
+  border: 0;
+
+  background: var(--main);
+
+  transition: 0.25s;
+}
+
+.board-header > .buttons > button:hover {
+  background: var(--accent-main);
+  transform: scale(1.2);
+}
+.logo-h {
+  display: flex;
+  align-items: center;
+
+  gap: 1.5rem;
+
+  margin-right: auto;
+
+  user-select: none;
+}
+
+.logo-h > img {
+  width: 64px;
+  height: 64px;
+
+  filter: invert();
+}
+
+.logo-h > p {
+  font-size: 2rem;
+  color: var(--main);
+  font-weight: bold;
+}
+
 .board {
-  height: 100vh;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  margin-top: 32px;
 }
 
 .game-board {

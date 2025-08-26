@@ -1,8 +1,8 @@
 const startScreen = (function () {
   const form = document.querySelector('form');
-  const board = document.querySelector('.board');
-  const startScreen = document.querySelector('.start-screen');
 
+  const gameScreen = document.querySelector('.game-screen');
+  const startScreenDiv = document.querySelector('.start-screen');
   let p1Name, p2Name, p1Sign, p2Sign;
 
   form.addEventListener('submit', (event) => {
@@ -20,8 +20,8 @@ const startScreen = (function () {
       return;
     }
 
-    board.classList.remove('removed');
-    startScreen.classList.add('removed');
+    gameScreen.classList.remove('removed');
+    startScreenDiv.classList.add('removed');
 
     game.playGame();
   });
@@ -46,6 +46,10 @@ const createPlayer = function (details) {
     score++;
   };
 
+  const resetScore = () => {
+    score = 0;
+  };
+
   const getName = () => {
     return pname;
   };
@@ -58,7 +62,7 @@ const createPlayer = function (details) {
     return score;
   };
 
-  return { incrementScore, getScore, getName, getSign };
+  return { incrementScore, getScore, resetScore, getName, getSign };
 };
 
 const game = (function () {
@@ -70,7 +74,15 @@ const game = (function () {
   let players;
   let currentPlayer = 0;
 
+  const gameScreen = document.querySelector('.game-screen');
+  const startScreenDiv = document.querySelector('.start-screen');
   const gameBoard = document.querySelector('.game-board');
+
+  const resetBtn = document.querySelector('.reset-btn');
+  const backBtn = document.querySelector('.back-btn');
+
+  resetBtn.addEventListener('click', (event) => restartGame());
+  backBtn.addEventListener('click', (event) => stopGame());
 
   const initBoard = () => {
     players = [
@@ -137,6 +149,23 @@ const game = (function () {
       styleElem.innerHTML =
         '.player-stats.p2::after {background-color:var(--current-pl); width: 156px; height: 156px;}';
     }
+  };
+
+  const stopGame = () => {
+    const cells = [...document.querySelectorAll('.board-cell')];
+    for (item of cells) {
+      gameBoard.removeChild(item);
+    }
+    gameScreen.classList.add('removed');
+    startScreenDiv.classList.remove('removed');
+  };
+
+  const restartGame = () => {
+    resetBoard();
+    for (item of players) {
+      item.resetScore();
+    }
+    initScores();
   };
 
   const resetBoard = () => {
