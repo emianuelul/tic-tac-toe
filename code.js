@@ -94,20 +94,48 @@ const game = (function () {
             event.target.textContent = players[currentPlayer].getSign();
             board[i][j] = players[currentPlayer].getSign();
             spacesLeft--;
-            currentPlayer = Number(!currentPlayer);
+
+            changePlayer();
 
             if (spacesLeft === 0 && checkWin(i, j) === 0) {
-              alert('Draw!');
-              resetBoard();
+              gameBoard.classList.add('.disabled');
+              setTimeout(() => {
+                resetBoard();
+                gameBoard.classList.remove('.disabled');
+              }, 2000);
             }
 
             if (checkWin(i, j) === 1) {
               updateScores();
-              resetBoard();
+
+              gameBoard.classList.add('disabled');
+              setTimeout(() => {
+                resetBoard();
+                gameBoard.classList.remove('disabled');
+              }, 2000);
             }
           }
         });
       }
+    }
+  };
+
+  var styleElem = document.head.appendChild(document.createElement('style'));
+  styleElem.innerHTML = '';
+  styleElem.innerHTML =
+    '.player-stats.p1::after {background-color:var(--current-pl); width: 156px; height: 156px;}';
+
+  const changePlayer = () => {
+    currentPlayer = Number(!currentPlayer);
+
+    if (currentPlayer === 0) {
+      styleElem.innerHTML = '';
+      styleElem.innerHTML =
+        '.player-stats.p1::after {background-color:var(--current-pl); width: 156px; height: 156px;}';
+    } else if (currentPlayer === 1) {
+      styleElem.innerHTML = '';
+      styleElem.innerHTML =
+        '.player-stats.p2::after {background-color:var(--current-pl); width: 156px; height: 156px;}';
     }
   };
 
@@ -120,37 +148,47 @@ const game = (function () {
         cells[i * 3 + j].textContent = '';
       }
     }
+    styleElem.innerHTML = '';
+    styleElem.innerHTML =
+      '.player-stats.p1::after {background-color:var(--current-pl); width: 156px; height: 156px;}';
     currentPlayer = 0;
   };
 
-  const initScores = () => {
-    const scores = [...document.querySelectorAll('.score')];
+  const playerNames = [...document.querySelectorAll('.player-name')];
+  const scores = document.querySelectorAll('.score');
 
+  const initScores = () => {
     let i = 0;
     for (item of scores) {
-      item.textContent = `${players[i].getName()}: ${players[i].getScore()}`;
+      item.textContent = `${players[i].getScore()}`;
+      i++;
+    }
+    i = 0;
+    for (item of playerNames) {
+      item.textContent = `${players[i].getName()}`;
       i++;
     }
   };
 
   const updateScores = () => {
-    const scores = document.querySelectorAll('.score');
     const p = Number(!currentPlayer);
     players[p].incrementScore();
 
-    scores[p].textContent = `${players[p].getName()}: ${players[p].getScore()}`;
+    scores[p].textContent = `${players[p].getScore()}`;
   };
 
   const checkWin = (lin, col) => {
     const p = players[Number(!currentPlayer)].getSign();
 
     // row
-    if (board[lin][0] === p && board[lin][1] === p && board[lin][2] === p)
+    if (board[lin][0] === p && board[lin][1] === p && board[lin][2] === p) {
       return 1;
+    }
 
     // column
-    if (board[0][col] === p && board[1][col] === p && board[2][col] === p)
+    if (board[0][col] === p && board[1][col] === p && board[2][col] === p) {
       return 1;
+    }
 
     // diagonals
     if (
@@ -158,15 +196,17 @@ const game = (function () {
       board[0][0] === p &&
       board[1][1] === p &&
       board[2][2] === p
-    )
+    ) {
       return 1;
+    }
     if (
       lin + col === 2 &&
       board[0][2] === p &&
       board[1][1] === p &&
       board[2][0] === p
-    )
+    ) {
       return 1;
+    }
 
     return 0;
   };
